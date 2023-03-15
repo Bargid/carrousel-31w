@@ -14,7 +14,7 @@
   * Description: Permet d'afficher dans une boite modale, les images d'une galerie avec un système de navigation
   */
 
-  function carroussel_enqueue() {
+  function carrousel_enqueue() {
 
     $version_css = filemtime(plugin_dir_path(__FILE__ ) . "style.css");
     $version_js = filemtime(plugin_dir_path(__FILE__) . "js/carrousel.js");
@@ -36,11 +36,11 @@
 
   function creation_carrousel() {
 
-    return '<button class="bouton__ouvrir">Ouvrir</button>
+    return '<button class="boutonouvrir">Ouvrir</button>
             <div class="carrousel">
-            <button class="bouton__x">X</button>
-            <figure class="carrousel__figure"></figure>
-            <form class="carrousel__form"></form>
+            <button class="boutonx">X</button>
+            <figure class="carrouselfigure"></figure>
+            <form class="carrouselform"></form>
             </div>';
   }
 
