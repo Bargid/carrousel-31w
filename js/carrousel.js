@@ -1,71 +1,103 @@
 (function(){
     // fonction IFEE
     console.log('début du carrousel')
-    let boutonouvrir = document.querySelector('.boutonouvrir')
+    let bouton__ouvrir = document.querySelector('.bouton__ouvrir')
     let elmCarrousel = document.querySelector('.carrousel')
-    let elmBoutonx = document.querySelector('.boutonx')
+    let elmBouton__x = document.querySelector('.bouton__x')
     let elmGalerie = document.querySelector('.galerie')
-    let elmGalerieimg = elmGalerie.querySelectorAll('img')
-    let elmCarrouselfigure = document.querySelector('.carrouselfigure')
-    let elmCarrouselform = document.querySelector(".carrouselform")
-    console.log(elmGalerieimg.length)
+    let elmGalerie__img = elmGalerie.querySelectorAll('img')
+    let elmCarrousel__figure = document.querySelector('.carrousel__figure')
+    let elmCarrousel__form = document.querySelector(".carrousel__form")
+    let elmCarrousel__arrowLeft = document.createElement('button');
+    let elmCarrousel__arrowRight = document.createElement('button');
 
-    console.log(boutonouvrir.tagName)
-
-    boutonouvrir.addEventListener('mousedown', function(){
-        console.log('boîte modale')
+    bouton__ouvrir.addEventListener('mousedown', function(){
+        
         elmCarrousel.classList.add('carrousel--ouvrir')
-        ajouter_carrousel()
+        ajouter_carrousel(0)
     })
-
-    elmGalerieimg.addEventListener('mousedown', function(){
-        elmCarrousel.classList.add('carrousel--ouvrir')
-        ajouter_carrousel()
-    })
-
-    elmBoutonx.addEventListener('mousedown', function(){
-        console.log('boîte modale')
+    elmBouton__x.addEventListener('mousedown', function(){
+        
         elmCarrousel.classList.remove('carrousel--ouvrir')
+        index__precedent = -1;
     })
 
-    function ajouter_carrousel()
+    elmGalerie__img.forEach((img, index) => {
+        img.addEventListener("click", function(){
+            elmCarrousel.classList.add('carrousel--ouvrir')
+            ajouter_carrousel(index)
+        })
+    });
+    
+    function ajouter_carrousel(index)
     {
-        for (const elmImg of elmGalerieimg){
-            ajouter_img(elmImg) // ajoute l'image dans le carrousel
-            ajouter_radio()
+        elmCarrousel__figure.innerHTML = '';
+        elmCarrousel__form.innerHTML = '';
+
+        for (const [i, elmImg] of elmGalerie__img.entries()){
+            ajouter_img(elmImg, i)
+            ajouter_radio(i)
         }
-        elmCarrouselfigure.children[0].classList.add("carrouselimg--activer")
+        
+        activer__image(index)
+        ajouter_arrows();
+    }
+    
+    function ajouter_img(elmImg, index){
+        let elmCarrousel__img = document.createElement('img')
+        elmCarrousel__img.setAttribute('src', elmImg.getAttribute('src'))
+        elmCarrousel__img.classList.add("carrousel__img")
+        elmCarrousel__img.dataset.index = index
+        elmCarrousel__figure.appendChild(elmCarrousel__img)
     }
 
-    function ajouter_img(elmImg){
-        let elmCarrouselimg = document.createElement('img')
-        elmCarrouselimg.setAttribute('src', elmImg.getAttribute('src'))
-        elmCarrouselimg.classList.add("carrouselimg")
-        elmCarrouselimg.dataset.index = index
-        elmCarrouselfigure.appendChild(elmCarrouselimg)
-    }
+    let index__precedent = -1;
 
-    let index = 0
-    let indexprecedent = -1;
-
-    function ajouter_radio(){
-        let elmCarrouselradio = document.createElement("input")
-        elmCarrouselradio.setAttribute("type", "radio")
-        elmCarrouselradio.setAttribute("name", "radCarrousel")
-        elmCarrouselradio.dataset.index = index
-        index++
-        elmCarrouselform.appendChild(elmCarrouselradio)
-        elmCarrouselradio.addEventListener("mousedown", function(){
-            activerimage(this.dataset.index)
+    function ajouter_radio(index){
+        let elmCarrousel__radio = document.createElement("input")
+        elmCarrousel__radio.setAttribute("type", "radio")
+        elmCarrousel__radio.setAttribute("name", "radCarrousel")
+        elmCarrousel__radio.dataset.index = index
+        elmCarrousel__form.appendChild(elmCarrousel__radio)
+        elmCarrousel__radio.addEventListener("mousedown", function(){
+            activer__image(this.dataset.index)
         })
 
     }
 
-    function activerimage(index){
-        if(indexprecedent != -1){
-            elmCarrouselfigure.children[indexprecedent].classList.remove("carrouselimg--activer")
+    function activer__image(index){
+        if(index__precedent != -1){
+            elmCarrousel__figure.children[index__precedent].classList.remove("carrousel__img--activer")
+            elmCarrousel__form.children[index__precedent].checked = false;
         }
-        elmCarrouselfigure.children[index].classList.add("carrouselimg--activer")
-        indexprecedent = index;
+        elmCarrousel__figure.children[index].classList.add("carrousel__img--activer")
+        elmCarrousel__form.children[index].checked = true;
+        index__precedent = index;
     }
-})()
+
+    function ajouter_arrows() {
+        let left_arrow = document.createElement("div");
+        left_arrow.classList.add("carrousel__arrow", "carrousel__arrow--left");
+        elmCarrousel__figure.appendChild(left_arrow);
+      
+        let right_arrow = document.createElement("div");
+        right_arrow.classList.add("carrousel__arrow", "carrousel__arrow--right");
+        elmCarrousel__figure.appendChild(right_arrow);
+      
+        left_arrow.addEventListener("click", function () {
+          let index =
+            index__precedent === 0
+              ? elmGalerie__img.length - 1
+              : index__precedent - 1;
+          activer__image(index);
+        });
+      
+        right_arrow.addEventListener("click", function () {
+          let index =
+            index__precedent === elmGalerie__img.length - 1
+              ? 0
+              : index__precedent + 1;
+          activer__image(index);
+        });
+      }
+})();

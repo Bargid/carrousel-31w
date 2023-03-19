@@ -1,17 +1,17 @@
 /* la feuille de style du carrousel */
 /* Le conteneur principal du carrousel*/
 .carrousel {
+  z-index: 10;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   transform: scale(0);
-  transition: transform 0.3s;
+  transition: transform 0.5s;
   background-color: lavender;
-  z-index: 9;
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 500px) {
   .carrousel {
     width: 50%;
     height: 50%;
@@ -25,25 +25,50 @@
 }
 
 /* bouton de fermeture de la boite modale */
-.boutonx {
+.bouton__x {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 30px;
-  height: 30px;
-  border: 1px solid lightgray;
+  width: 25px;
+  height: 25px;
   border-radius: 5px;
-  z-index: 10;
+  z-index: 11;
+  font-family: "Alegreya Sans SC", sans-serif;
+  color: #551a8b;
+  border: 2px solid rgb(0, 128, 255);
+  border-radius: 3px;
+  background-color: rgba(255, 127, 80, 0.7);
+  transition: 0.3s;
+}
+
+.bouton__x:hover {
+  background-color: rgb(255, 127, 80);
+}
+
+.bouton__ouvrir {
+  margin: 10px 40px;
+  margin-bottom: 0;
+  font-family: "Alegreya Sans SC", sans-serif;
+  color: #551a8b;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px solid rgb(0, 128, 255);
+  border-radius: 10px;
+  background-color: rgba(255, 127, 80, 0.7);
+  transition: 0.3s;
+}
+
+.bouton__ouvrir:hover {
+  background-color: rgb(255, 127, 80);
 }
 
 /* conteneur des images du carrousel*/
-.carrouselfigure {
+.carrousel__figure {
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
-.carrouselimg {
+.carrousel__img {
   display: block;
   width: 100%;
   height: 100%;
@@ -51,23 +76,52 @@
   top: 0;
   left: 0;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.5s;
   object-fit: cover;
   z-index: 9;
 }
 
-.carrouselimg--activer {
+.carrousel__img--activer {
   opacity: 1;
 }
 
 /* conteneur des boutons radios*/
-.carrouselform {
-  display: flex;
-  justify-content: center;
+.carrousel__form {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 30px;
-  z-index: 12;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  z-index: 13;
+}
+
+.carrousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 60px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.carrousel__arrow--left {
+  left: 0;
+  background-image: url("./images/arrow_left.png"); /* Replace with your left arrow image */
+  background-color: rgba(255, 127, 80, 0.7);
+  background-size: 40px 60px;
+  border: solid 3px #551a8b;
+  z-index: 99;
+}
+
+.carrousel__arrow--right {
+  right: 0;
+  background-image: url("./images/arrow_right.png"); /* Replace with your right arrow image */
+  background-color: rgba(255, 127, 80, 0.7);
+  background-size: 40px 60px;
+  border: solid 3px #551a8b;
+  z-index: 99;
 }/*# sourceMappingURL=style.css.map */
